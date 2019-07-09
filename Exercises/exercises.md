@@ -11,27 +11,27 @@ write a script to:
 lines containing "seq" in them. Write a script for a situation 
 where no particular pattern appears in the fasta header. That is
 the file could be:
-`ragnarok`
-`ACTGTGTGTGTACAGTGCA`
-`thor`
-`ACTGTGTGTGTACGT`
-`odin`
+`ragnarok`\
+`ACTGTGTGTGTACAGTGCA`\
+`thor`\
+`ACTGTGTGTGTACGT`\
+`odin`\
 `ACAACACGTGTGTTTTTTT`
 
 ### Exercise 2:
 Write a script to read a multi-line fasta file (such as the one below)
 into a Python dictionary. A multi-line fasta
 looks as below:
-`>seq1`
-`ACTGTGTGTGTACAGTGCA`
-`ACTGTGTGTGTA`
-`>seq2`
-`ACTGTGTGTGTACGT`
-`ACTGTGTGTGTACGT`
-`ACTGTGTGT`
-`>seq3`
-`ACAACACGTGTGTT`
-`ACAACACGTGTGTT`
+`>seq1`\
+`ACTGTGTGTGTACAGTGCA`\
+`ACTGTGTGTGTA`\
+`>seq2`\
+`ACTGTGTGTGTACGT`\
+`ACTGTGTGTGTACGT`\
+`ACTGTGTGT`\
+`>seq3`\
+`ACAACACGTGTGTT`\
+`ACAACACGTGTGTT`\
 `ACAACA`
 
 ### Exercise 3:
