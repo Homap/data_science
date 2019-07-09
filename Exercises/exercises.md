@@ -11,11 +11,11 @@ write a script to:
 lines containing "seq" in them. Write a script for a situation 
 where no particular pattern appears in the fasta header. That is
 the file could be:\
-`ragnarok`\
+`rostam`\
 `ACTGTGTGTGTACAGTGCA`\
-`thor`\
+`sohrab`\
 `ACTGTGTGTGTACGT`\
-`odin`\
+`soodabeh`\
 `ACAACACGTGTGTTTTTTT`
 
 ### Exercise 2:
