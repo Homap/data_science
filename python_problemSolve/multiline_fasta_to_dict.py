@@ -1,4 +1,4 @@
-# Exercise 3: Create a multi-line fasta and read
+# Exercise 2: Create a multi-line fasta and read
 # that into a fasta dictionary. A multi-line fasta
 # looks as below:
 # >seq1
