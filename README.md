@@ -18,3 +18,6 @@ or\
 `git commit -m "These are the changes that I made"`\
 `git push -u origin master`
 
+### Useful resources
+Virtual environment
+https://www.youtube.com/watch?v=nnhjvHYRsmM
