@@ -1,4 +1,4 @@
-[For more information regarding virtualenv, you can check the following youtube video link] (https://www.youtube.com/watch?v=nnhjvHYRsmM)
+[For more information regarding virtualenv, you can check the following youtube video link](https://www.youtube.com/watch?v=nnhjvHYRsmM)
 
 ## Virtualenv
 
@@ -7,10 +7,10 @@ dependencies needed within one workspace in a folder in your computer.
 
 `pip install virtualenv`
 
-Create a virtual environment
+Create a virtual environment\
 `virtualenv data_science_demo`
 
-Activate the virtual environment
+Activate the virtual environment\
 `source data_science_demo/bin/activate`
 
 Check python version
