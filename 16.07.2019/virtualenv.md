@@ -30,4 +30,5 @@ You can do all your python stuff in your environment. If you need specific confi
 
 You can also use the command below in python3 to create virtual environment:\
 `python3 -m venv data_science_demo_again`
+
 `source data_science_demo_again/bin/activate`
