@@ -3,7 +3,7 @@ This document contains all exercises that we solve in our sessions.
 Solutions to all exercises is uploaded in the folder exercises_solution. 
 Python scripts for solutions are numbered by the exercises. 
 
-### Exercise 1:
+### Exercise 1: SOLVED
 Given the fasta file in python_problemSolve/fasta_exercise.fa, 
 write a script to:
 
@@ -20,7 +20,7 @@ the file could be:\
 `soodabeh`\
 `ACAACACGTGTGTTTTTTT`
 
-### Exercise 2:
+### Exercise 2: SOLVED
 Write a script to read a multi-line fasta file (such as the one below)
 into a Python dictionary. A multi-line fasta
 looks as below:\
@@ -36,7 +36,7 @@ looks as below:\
 `ACAACACGTGTGTT`\
 `ACAACA`
 
-### Exercise 3:
+### Exercise 3: SOLVED
 Write the script in Exercise 2 as a function. 
 So that you can import it to your future scripts and use it as below:
 `fasta_to_dict(your_fasta_file)`
