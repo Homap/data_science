@@ -10,8 +10,6 @@ import sys
 # Then write the output to the new fasta file.
 #********************************
 # Run: python exercise_1B.py fasta_nopatter_header.fa
-# think also about solving it with regex:
-# Exercise: Solving the same problem with regex.
 #********************************
 # Open fasta file
 fasta_file = open(sys.argv[1], "r")

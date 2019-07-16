@@ -10,11 +10,8 @@ start = time.time()
 # This script takes a fasta sequence and reads it into a dictionary.
 # Each line is added to a list and the sequences in a list are then joined. 
 # With each new header, the list is then updated. 
-# Usage: ./fasta_multiline_func.py asta_exercise_multi.fa 
+# Usage: Function to read fasta file into a dictionary
 #*******************************************************************************
-
-#filename = open(sys.argv[1], 'r')
-#filename = gzip.open(sys.argv[1], "rt")
 
 def readfasta(filename):
 	fasta_dict = {}
@@ -35,9 +32,6 @@ def readfasta(filename):
 	fasta_dict[header] = ''.join(l) 
 
 	return fasta_dict
-
-import fasta_multiline_func
-readfasta(filename.fa)
 
 end = time.time()
 print(end - start)
