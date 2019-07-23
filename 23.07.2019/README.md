@@ -1,5 +1,10 @@
 # 23 July 2019
 
+## Some conda
+* material from the [CodeRefinery workshop](https://coderefinery.github.io/reproducible-research/04-reproducible-envs/)
+
+## Pythoning
+
 In this session, we plan to look into the following issues:
 
 * 1. Solve Exercise 4 and Exercise 5. 
