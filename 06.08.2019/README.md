@@ -6,9 +6,9 @@ If any change in a given site changes the amino acid, the site is said to be 0-f
 
 Let's use the counting method as presented in section 2.5.1.1, page 48 of Molecular Evolution: A Statistical Approach by Ziheng Yang.
 
-We want to calculate the number of synonymous and nonsynymous sites for the codon CAC:
+We want to calculate the number of synonymous and nonsynymous sites for the codon `CAC` which codes for the aminoacid `H`:
 
-|CAC| H | effect |
+|Codon| Aminoacid | effect |
 |---|---|---|
 | TAC | Y | nonsynonymous |
 | GAC | D | nonsynonymous |
