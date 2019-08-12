@@ -1,4 +1,4 @@
-# Annotate genomic sites for synonymous, missense and nonsense polymorphisms
+# Annotate genomic sites for being synonymous, missense and nonsense
 
 It is often useful to know the impact of a mutation on an amino acid. This will help us to divide genomic sites into those that could be susceptible to selection and those that could be potentially neutral. Mutations in codons can be divided into synonymous and nonsynonymous. Synonymous changes do not change the amino acid. Nonsynonymous changes are further divided into missense (one amino acid into the other) and nonsense (an amino acid into stop codon). 
 
