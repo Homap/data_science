@@ -1,0 +1,10 @@
+scaf1	yes	mRNA	2	29	.	+	.	ID=lala1;
+scaf1	yes	CDS	2	6	.	+	0	lala1
+scaf1	yes	CDS	10	17	.	+	1	lala1
+scaf1	yes	CDS	25	29	.	+	2	lala1
+scaf2	yes	mRNA	2	25	.	-	.	ID=lala2;
+scaf2	yes	CDS	23	25	.	-	0	lala2
+scaf2	yes	CDS	18	21	.	-	0	lala2
+scaf2	yes	CDS	12	15	.	-	2	lala2
+scaf2	yes	CDS	6	9	.	-	1	lala2
+scaf2	yes	CDS	2	4	.	-	0	lala2
