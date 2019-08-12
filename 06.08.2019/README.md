@@ -24,7 +24,7 @@ For codon:
 
 Number of synonymous sites : 3 * (1/9) = 0.333
 
-Number of nonsynonymou sites : 3 * (8/9) = 2.667
+Number of nonsynonymous sites : 3 * (8/9) = 2.667
 
 For each site: 
 
