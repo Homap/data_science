@@ -38,9 +38,11 @@ site 3 (C): (1/3) synonymous and (2/3) nonsynonymous
 Using the scripts in the *annotate* folder, you can generate a codon degeneracy table, moreover, using a gff file and your genome fasta sequence, you can annotate each site in the coding sequence into synonymous, missense and nonsense. Such a file can then be easily used to overlap with your VCF file, so not only you will know about the annotation of your SNPs but also you will have the background annotation which is necessary to calculate statistics such as pN/pS.
 
 To create the codon table, simply run:
+
 `python degeneracy_per_codon.py`
 
 To annotate your genome of interest, run (using the example data):
+
 `python annotate_sites.py data/genome.fa data/genome.gff`
 
 
