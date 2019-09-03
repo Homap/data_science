@@ -1,14 +1,12 @@
 Material from data science session on snakemake
 
-Verena Kutschera
-
-20190903_snakemake_intro_EBC_VKutschera.pdf
+### 20190903_snakemake_intro_EBC_VKutschera.pdf
 - Presentation slides
 
-mapping_genotyping.sh
+### mapping_genotyping.sh
 - Bash script for mapping & genotyping, basis for snakemake demo workflow
 
-snakemake_demo_workflow/
+### snakemake_demo_workflow/
 - Contains demo workflow from presentation
 - Snakefile containing the rules of the workflow
 - cluster.yaml with cluster configuration
