@@ -1,0 +1,200 @@
+##### Snakefile for snakemake demo workflow #####
+
+configfile: "config.yaml"
+localrules: all, merged_flagstat
+
+rule all:
+    input: "results/pca/all.filtered.recode.eigenvec.pc1_pc2.pdf"
+
+rule bwa_index:
+    """Index the reference genome"""
+    input:
+        ref = config["reference"]
+    output:
+        amb = config["reference"] + ".amb",
+        ann = config["reference"] + ".ann",
+        bwt = config["reference"] + ".bwt",
+        pac = config["reference"] + ".pac",
+        sa = config["reference"] + ".sa"
+    threads: 1
+    shell:
+        """
+        module load bioinfo-tools bwa/0.7.17
+        bwa index {input.ref}
+        """
+
+rule mapping:
+    """Map short reads to reference genome with BWA mem"""
+    input:
+        fastq_1 = "data/{run}_1.fastq.gz",
+        fastq_2 = "data/{run}_2.fastq.gz",
+        ref = config["reference"],
+        amb = config["reference"] + ".amb",
+        ann = config["reference"] + ".ann",
+        bwt = config["reference"] + ".bwt",
+        pac = config["reference"] + ".pac",
+        sa = config["reference"] + ".sa"
+    output:
+        bam = temp("results/mapping/{run}.bam")
+    threads: 1
+    shell:
+        """
+        module load bioinfo-tools bwa/0.7.17 samtools/1.8
+        bwa mem {input.ref} {input.fastq_1} {input.fastq_2} | samtools sort - > {output}
+        """
+
+def merge_bams_input(wildcards):
+    inputs = []
+    # Match wildcard sample with run id
+    for run in config["runs"]:
+        if run.startswith(wildcards.sample):
+            inputs.append("results/mapping/{}.bam".format(run))
+    return inputs
+
+rule merge_bams:
+    """Merge bam files from several runs for the same sample"""
+    input:
+        merge_bams_input
+    output:
+        "results/mapping/{sample}.merged.bam"
+    threads: 1
+    shell:
+        """
+        module load bioinfo-tools samtools/1.8
+        samtools merge {output} {input}
+        """
+
+rule merged_flagstat:
+    """Get statistics on bam files"""
+    input:
+        "results/mapping/{sample}.merged.bam"
+    output:
+        "results/mapping/{sample}.merged.stats.txt"
+    threads: 1
+    shell:
+        """
+        module load bioinfo-tools samtools/1.8
+        samtools flagstat {input} > {output}
+        """
+
+rule genotyping:
+    """Call variants using bcftools mpileup"""
+    input:
+        bams = expand("results/mapping/{sample}.merged.bam", sample=config["samples"]),
+        stats = expand("results/mapping/{sample}.merged.stats.txt", sample=config["samples"]),
+        ref = config["reference"]
+    output:
+        bcf = "results/genotyping/all.bcf"
+    threads: 1
+    params:
+        BQ = config["basequal"],
+        mq = config["mappingqual"]
+    group: "bcf"
+    shell:
+        """
+        module load bioinfo-tools bcftools/1.8
+        bcftools mpileup -Ou -Q {params.BQ} -q {params.mq} -B -f {input.ref} {input.bams} | bcftools call -m -O b -o {output.bcf}
+        """
+
+rule bcf_stats:
+    """Get statistics on bcf file"""
+    input:
+        "results/genotyping/all.bcf"
+    output:
+        "results/genotyping/all.stats.txt"
+    threads: 1
+    group: "bcf"
+    shell:
+        """
+        module load bioinfo-tools bcftools/1.8
+        bcftools stats {input} > {output}
+        """
+
+rule filter_bcf:
+    """Filter bcf for missing data and biallelic snps"""
+    input:
+        bcf = "results/genotyping/all.bcf",
+        stats = "results/genotyping/all.stats.txt"
+    output:
+        vcf = "results/pca/all.filtered.recode.vcf.gz",
+        idx = "results/pca/all.filtered.recode.vcf.gz.tbi"
+    threads: 1
+    params:
+        out = "results/pca/all.filtered",
+        fullname = "results/pca/all.filtered.recode.vcf"
+    shell:
+        """
+        module load bioinfo-tools vcftools/0.1.15 tabix/0.2.6
+        vcftools --bcf {input.bcf} --max-missing 1.0 --min-alleles 2 --recode --recode-INFO-all --out {params.out} &&
+        bgzip {params.fullname} &&
+        tabix -p vcf {output.vcf} 
+        """
+
+rule vcf2plink:
+    """Convert filtered vcf to plink format"""
+    input:
+        vcf = "results/pca/all.filtered.recode.vcf.gz",
+        idx = "results/pca/all.filtered.recode.vcf.gz.tbi"
+    output:
+        bed = temp("results/pca/all.filtered.recode.bed"),
+        bim = temp("results/pca/all.filtered.recode.bim"),
+        fam = temp("results/pca/all.filtered.recode.fam"),
+        nosex = temp("results/pca/all.filtered.recode.nosex")
+    threads: 1
+    params:
+        bfile = "results/pca/all.filtered.recode"
+    shell:
+        """
+        module load bioinfo-tools plink/1.90b4.9
+        plink --vcf {input.vcf} --make-bed --allow-extra-chr --out {params.bfile}
+        """
+
+rule plink_eigenvec:
+    """Make a PCA of the vcf file"""
+    input:
+        bed = "results/pca/all.filtered.recode.bed",
+        bim = "results/pca/all.filtered.recode.bim",
+        fam = "results/pca/all.filtered.recode.fam",
+        nosex = "results/pca/all.filtered.recode.nosex"
+    output:
+        eigenvec = "results/pca/all.filtered.recode.eigenvec",
+        eigenval = "results/pca/all.filtered.recode.eigenval"
+    threads: 1
+    params:
+        bfile = "results/pca/all.filtered.recode"
+    log: "results/pca/all.filtered.recode.log"
+    shell:
+        """
+        module load bioinfo-tools plink/1.90b4.9
+        plink --bfile {params.bfile} --allow-extra-chr --pca --out {params.bfile}
+        """
+
+rule plot_pc1_pc2:
+    """Create a pdf of the PCA axes PC1 and PC2"""
+    input:
+        eigen = "results/pca/all.filtered.recode.eigenvec"
+    output:
+        pdf = "results/pca/all.filtered.recode.eigenvec.pc1_pc2.pdf"
+    threads: 1
+    params:
+        palette = config["palette"]
+    run:
+        pcaDict={} # create a dictionary with sample names as key and a list as value with the PC1 and PC2 values
+        with open(input.eigen, 'r') as f: # loop through eigenvalue file from plink
+            for line in f:
+                l=line.strip().split()
+                PC=[] # list for PC values
+                PC.append(float(l[2])) # PC1
+                PC.append(float(l[3])) # PC2
+                pcaDict[l[0]]=PC # populate dictionary with sample name and PC list
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        n=0 # counter to take different colors
+        for sample in pcaDict:
+            plt.scatter(pcaDict[sample][0], pcaDict[sample][1], c=params.palette[n], s=60, edgecolors='None', label='sample: {}'.format(sample))
+            n+=1
+        plt.xlabel('PC1')
+        plt.ylabel('PC2')
+        plt.legend(loc='center left', scatterpoints=1, bbox_to_anchor=(1, 0.5))
+        plt.savefig(output.pdf, bbox_inches='tight', format='pdf')
