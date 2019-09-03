@@ -1,0 +1,14 @@
+##### cluster.yaml: cluster configuration file for snakemake demo workflow #####
+__default__:
+  account: snic2017-X-YYY
+  partition: core
+  time: 01:00:00
+  n: 1
+###
+mapping:
+  time: 02:00:00
+  n: 2
+merge_bams:
+  time: 02:00:00
+bcf:
+  time: 02:00:00
