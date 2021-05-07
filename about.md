@@ -1,3 +1,3 @@
-<h1 about us h1>
+<h1> About us </h1>
 
 # This is about me
